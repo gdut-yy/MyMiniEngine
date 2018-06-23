@@ -426,10 +426,216 @@ void draw_helicopter() {
 	glPopMatrix();
 }
 
+void print_axis() {
+	// 绘制白色坐标轴
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glBegin(GL_LINES);
+	glVertex3f(-9.0f, 0.0f, 0.0f);
+	glVertex3f(9.0f, 0.0f, 0.0f);
+	glVertex3f(0.0f, -9.0f, 0.0f);
+	glVertex3f(0.0f, 9.0f, 0.0f);
+	glVertex3f(0.0f, 0.0f, -9.0f);
+	glVertex3f(0.0f, 0.0f, 9.0f);
+	glEnd();
+}
+
+void print_head() {
+	// 绘制头部
+	glPushMatrix();
+	glTranslated(0.0f, 0.3f, 0.0f);
+	glColor3f(1.0f, 1.0f, 0.0f);	// 黄色
+	glutSolidSphere(0.3f, 15, 15);
+	glPopMatrix();
+
+	// 绘制左眼
+	glPushMatrix();
+	glTranslated(-0.12f, 0.3f, 0.25f);
+	glColor3f(0.0f, 0.0f, 0.0f);	// 黑色
+	glutSolidSphere(0.03f, 10, 10);
+	glPopMatrix();
+
+	// 绘制右眼
+	glPushMatrix();
+	glTranslated(0.12f, 0.3f, 0.25f);
+	glColor3f(0.0f, 0.0f, 0.0f);	// 黑色
+	glutSolidSphere(0.03f, 10, 10);
+	glPopMatrix();
+
+	// 绘制嘴部
+	glPushMatrix();
+	glTranslated(0.0f, 0.15f, 0.25f);
+	glScaled(0.15f, 0.02f, 0.02f);
+	glColor3f(0.0f, 0.0f, 0.0f);	// 黑色
+	glutSolidCube(1.0f);
+	glPopMatrix();
+
+	// 绘制帽子
+	glPushMatrix();
+	glTranslated(0.0f, 0.40f, 0.0f);
+	glRotatef(-90, 1, 0, 0);
+	glColor3f(1.0f, 1.0f, 1.0f);	// 白色
+	glutSolidCone(0.5f, 0.3f, 15, 3);
+	glPopMatrix();
+}
+
+void print_body() {
+	GLfloat up_x = 0.3;		// 身体顶面 x轴 正负偏离值
+	GLfloat up_y = 0.0;		// 身体顶面 y轴 正负偏离值
+	GLfloat up_z = 0.1;		// 身体顶面 z轴 正负偏离值
+
+	GLfloat down_x = 0.4;	// 身体底面 x轴 正负偏离值
+	GLfloat down_y = 0.7;	// 身体底面 y轴 正负偏离值
+	GLfloat down_z = 0.2;	// 身体底面 z轴 正负偏离值
+
+	glBegin(GL_QUADS);				// 绘制正方形  	
+	glColor3f(1.0f, 0.0f, 0.0f);	// 红色
+
+	// 身体顶面
+	glVertex3f(up_x, up_y, -up_z);	// 右上  
+	glVertex3f(-up_x, up_y, -up_z);	// 左上  
+	glVertex3f(-up_x, up_y, up_z);	// 左下  
+	glVertex3f(up_x, up_y, up_z);	// 右下  
+
+	glVertex3f(up_x, up_y, up_z);
+	glVertex3f(-up_x, up_y, up_z);
+	glVertex3f(-up_x, up_y, -up_z);
+	glVertex3f(up_x, up_y, -up_z);
+
+	// 身体左面
+	glVertex3f(-up_x, up_y, up_z);
+	glVertex3f(-up_x, up_y, -up_z);
+	glVertex3f(-down_x, -down_y, -down_z);
+	glVertex3f(-down_x, -down_y, down_z);
+
+	glVertex3f(-down_x, -down_y, down_z);
+	glVertex3f(-down_x, -down_y, -down_z);
+	glVertex3f(-up_x, up_y, -up_z);
+	glVertex3f(-up_x, up_y, up_z);
+
+	// 身体右面
+	glVertex3f(up_x, up_y, -up_z);
+	glVertex3f(up_x, up_y, up_z);
+	glVertex3f(down_x, -down_y, down_z);
+	glVertex3f(down_x, -down_y, -down_z);
+
+	glVertex3f(down_x, -down_y, -down_z);
+	glVertex3f(down_x, -down_y, down_z);
+	glVertex3f(up_x, up_y, up_z);
+	glVertex3f(up_x, up_y, -up_z);
+
+	// 身体正面
+	glVertex3f(up_x, up_y, up_z);
+	glVertex3f(-up_x, up_y, up_z);
+	glVertex3f(-down_x, -down_y, down_z);
+	glVertex3f(down_x, -down_y, down_z);
+
+	glVertex3f(down_x, -down_y, down_z);
+	glVertex3f(-down_x, -down_y, down_z);
+	glVertex3f(-up_x, up_y, up_z);
+	glVertex3f(up_x, up_y, up_z);
+
+	// 身体背面
+	glVertex3f(-up_x, up_y, -up_z);
+	glVertex3f(up_x, up_y, -up_z);
+	glVertex3f(down_x, -down_y, -down_z);
+	glVertex3f(-down_x, -down_y, -down_z);
+
+	glVertex3f(-down_x, -down_y, -down_z);
+	glVertex3f(down_x, -down_y, -down_z);
+	glVertex3f(up_x, up_y, -up_z);
+	glVertex3f(-up_x, up_y, -up_z);
+
+	// 身体底面
+	glVertex3f(down_x, -down_y, -down_z);	//右上  
+	glVertex3f(-down_x, -down_y, -down_z);	//左上  
+	glVertex3f(-down_x, -down_y, down_z);	//左下  
+	glVertex3f(down_x, -down_y, down_z);	//右下
+
+	glVertex3f(down_x, -down_y, down_z);
+	glVertex3f(-down_x, -down_y, down_z);
+	glVertex3f(-down_x, -down_y, -down_z);
+	glVertex3f(down_x, -down_y, -down_z);
+
+	glEnd();
+
+	// 绘制左手臂
+	glPushMatrix();
+	glTranslated(-0.4f, -0.15f, 0.15f);
+	glRotatef(70, 1, 0, 0);
+	glScaled(0.15f, 0.3f, 0.15f);
+	glColor3f(1.0f, 0.0f, 0.0f);	// 红色
+	glutSolidSphere(1.0f, 15, 15);
+	glPopMatrix();
+
+	// 绘制左手掌
+	glPushMatrix();
+	glTranslated(-0.4f, -0.05f, 0.4f);
+	glColor3f(1.0f, 1.0f, 0.0f);	// 黄色
+	glutSolidSphere(0.1f, 15, 15);
+	glPopMatrix();
+
+	// 绘制茶壶
+	glPushMatrix();
+	glTranslated(-0.4f, 0.1f, 0.4f);
+	glColor3f(1.0f, 1.0f, 1.0f);	// 白色
+	glutWireTeapot(0.1f);
+	glPopMatrix();
+
+	// 绘制右手臂
+	glPushMatrix();
+	glTranslated(0.40f, -0.3f, 0.0f);
+	glRotatef(15, 0, 0, 1);
+	glScaled(0.15f, 0.3f, 0.15f);
+	glColor3f(1.0f, 0.0f, 0.0f);	// 红色
+	glutSolidSphere(1.0f, 15, 15);
+	glPopMatrix();
+
+	// 绘制右手掌
+	glPushMatrix();
+	glTranslated(0.5f, -0.6f, 0.0f);
+	glColor3f(1.0f, 1.0f, 0.0f);	// 黄色
+	glutSolidSphere(0.1f, 15, 15);
+	glPopMatrix();
+}
+
+void print_foot() {
+	// 绘制腿部
+	glPushMatrix();
+	glTranslated(0.0f, -0.75f, 0.0f);
+	glScaled(0.8f, 0.1f, 0.4f);
+	glColor3f(0.0f, 0.0f, 1.0f);	// 蓝色
+	glutSolidCube(1.0f);
+	glPopMatrix();
+
+	// 绘制左腿
+	glPushMatrix();
+	glTranslated(-0.2f, -1.0f, 0.0f);
+	glScaled(0.36f, 0.5f, 0.36f);
+	glColor3f(0.0f, 0.0f, 1.0f);	// 蓝色
+	glutSolidCube(1.0f);
+	glPopMatrix();
+
+	// 绘制右腿
+	glPushMatrix();
+	glTranslated(0.2f, -1.0f, 0.0f);
+	glScaled(0.36f, 0.5f, 0.36f);
+	glColor3f(0.0f, 0.0f, 1.0f);	// 蓝色
+	glutSolidCube(1.0f);
+	glPopMatrix();
+}
+
+void draw_profile_photo(){
+	print_axis();
+	print_head();	// 绘制头部	
+	print_body();	// 绘制身体
+	print_foot();	// 绘制下身	
+}
+
 void draw_scene() {
-	draw_obj_model();
+	//draw_obj_model();
 	//draw_xmas_tree();
 	//draw_helicopter();
+	draw_profile_photo();
 }
 
 // 每当需要重绘时调用；init()和reshape()后调用。
